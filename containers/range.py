@@ -27,21 +27,57 @@ def range(a, b=None, c=None):
     Carefully written C code can be faster than the corresponding python code because it can remove some of the overhead of this automation process,
     but the resulting code is much longer and harder to read/write.
     '''
-    if b == None and c == None:
+    if not c:
+        if not b:
+            
+            i = 0
+            prev = 0
+            if a <= 0:
+               return []
+            while i < a:
+                if i == 0:
+                    i += 1
+                    num = 0
+                    yield num
+                else:
+                    i += 1
+                    prev += 1
+                    yield prev
+        if b:
+            i = 0
+            num_iterations = b - a
+            prev = 0
+            curr = a
+            while i < num_iterations:
+                if i == 0:
+                    num = a
+                    i += 1
+                    yield num
+                else:
+                    num = curr + 1
+                    curr = curr + 1
+                    i += 1
+                    yield num
+    if c:
+        step = c
         i = 0
-        prev = 0
-        if a <= 0:
-            return []
-        while i < a:
-            if i ==0:
+        num_iterations = (b - a)/c
+        curr = a
+        while i < num_iterations:
+            if i == 0:
+                num = a
                 i += 1
-                num = 0
                 yield num
             else:
+                num = curr + step
+                curr = curr + step
                 i += 1
-                prev += 1
-                yield prev
-    if c == None and b != None and a!= None:
+                yield num
+
+
+
+    '''
+
         i = 0
         num_iterations = b - a
         prev = 0
@@ -56,7 +92,7 @@ def range(a, b=None, c=None):
                 curr = curr + 1
                 i += 1
                 yield num
-    if c!= None and b!= None and a!= None:
+    if c and b and a:
         step = c
         i = 0
         num_iterations = (b - a)/c
@@ -72,3 +108,18 @@ def range(a, b=None, c=None):
                 i += 1
                 yield num
    
+    if not c and not b and a:
+        i = 0
+        prev = 0
+        if a <= 0:
+            return []
+        while i < a:
+            if i == 0:
+                i += 1
+                num = 0
+                yield num
+            else:
+                i += 1
+                prev += 1
+             yield prev
+    '''
