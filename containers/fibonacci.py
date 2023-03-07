@@ -103,7 +103,7 @@ def fib_yield(n=None):
             yield 1
         prev = 0
         curr = 1
-        for i in range(n-1):
+        for i in range(n - 1):
             if i == 0:
                 yield 1
             next = prev + curr
