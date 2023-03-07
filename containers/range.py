@@ -44,7 +44,7 @@ def range(a, b=None, c=None):
     if c:
         step = c
         i = 0
-        num_iterations = (b - a)/c
+        num_iterations = (b - a) / c
         curr = a
         while i < num_iterations:
             if i == 0:
