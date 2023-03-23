@@ -145,11 +145,11 @@ class BinaryTree():
         '''
         '''
         if start:
-            traveral = self.postorder(start.left, traversal)
-            traveral = self.postorder(start.right, traversal)
+            traversal = self.postorder(start.left, traversal)
+            traversal = self.postorder(start.right, traversal)
             traversal.append(start.value)
         return traversal
-    
+
     def __len__(self):
         '''
         Returns the number of elements contained in the tree.
