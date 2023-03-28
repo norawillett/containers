@@ -55,6 +55,9 @@ class BST(BinaryTree):
         Convert the contents of both trees into a sorted list,
         then compare those sorted lists for equality.
         '''
+        self_list = self.to_list('inorder')
+        t2_list = t2.to_list('inorder')
+        return sorted(t2_list) == sorted(self_list)
 
     def is_bst_satisfied(self):
         '''
@@ -195,7 +198,6 @@ class BST(BinaryTree):
 
     @staticmethod
     def _find_largest(node):
-        assert node is not None
         if not node.right:
             return node.value
         else:
