@@ -10,7 +10,7 @@ This homework is using an explicit tree implementation to help you get more prac
 from containers.BinaryTree import BinaryTree, Node
 
 
-class Heap():
+class Heap(BinaryTree):
     '''
     FIXME:
     Heap is currently not a subclass of BinaryTree.
@@ -24,6 +24,14 @@ class Heap():
         If xs is a list (i.e. xs is not None),
         then each element of xs needs to be inserted into the Heap.
         '''
+        super().__init__()
+        self.num_nodes = 0
+        if xs:
+            for x in xs:
+                self.insert(x)
+        
+        #self.root = None
+        
 
     def __repr__(self):
         '''
@@ -59,6 +67,14 @@ class Heap():
         FIXME:
         Implement this method.
         '''
+        ret = True
+        if node.left:
+            ret &= node.value <= node.left.value
+            ret &= Heap._is_heap_satisfied(node.left)
+        if node.right:
+            ret &= node.value <= node.right.value
+            ret &= Heap._is_heap_satisfied(node.right)
+        return ret
 
     def insert(self, value):
         '''
@@ -79,6 +95,29 @@ class Heap():
         Create a @staticmethod helper function,
         following the same pattern used in the BST and AVLTree insert functions.
         '''
+        self.num_nodes += 1
+        binary_str = bin(self.num_nodes)[3:]
+        if self.root is None:
+            self.root = Node(value)
+        else:
+            Heap._insert(self.root, value, binary_str)
+
+    @staticmethod
+    def _insert(node, value, binary_str):
+        if binary_str[0] == '0':
+            if len(binary_str) == 1:
+                node.left = Node(value)
+            else:
+                Heap._insert(node.left, value, binary_str[1:])
+            if node.value > node.left.value:
+                node.value, node.left.value = node.left.value, node.value
+        if binary_str[0] == '1':
+            if len(binary_str) == 1:
+                node.right = Node(value)
+            else:
+                Heap._insert(node.right, value, binary_str[1:])
+            if node.value > node.right.value:
+                node.value, node.right.value = node.right.value, node.value
 
     def insert_list(self, xs):
         '''
@@ -87,6 +126,8 @@ class Heap():
         FIXME:
         Implement this function.
         '''
+        for x in xs:
+            self.insert(x)
 
     def find_smallest(self):
         '''
@@ -95,6 +136,30 @@ class Heap():
         FIXME:
         Implement this function.
         '''
+        if not self.root:
+            return None
+        return self._find_smallest(self.root)
+    
+    def _find_smallest(self,node):
+        print("node=", node)
+        #print("self.node=", self.node)
+        if not node:
+            return self.root.value
+        print("node.left=", node.left)
+        print("node.right=", node.right)
+        left_value = self._find_smallest(node.left)
+        print("left_value=", left_value)
+        right_value = self._find_smallest(node.right)
+        print("right_value=", right_value)
+        if node.value < left_value and node.value < right_value:
+            print("node.value=", node.value)
+            return node.value
+        elif left_value < node.value and left_value < right_value:
+            print("left_value=", left_value)
+            print("right_value=", right_value)
+            return left_value
+        else:
+            return right_value
 
     def remove_min(self):
         '''
