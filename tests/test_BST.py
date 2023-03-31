@@ -309,8 +309,6 @@ def test__BST_iterable_1():
 
 
 @given(xs=ints)
-def test__BST_iterable_2(xs):
-@given(xs=ints)
 def test__BST_eq(xs):
     '''
     This test is essentially the same as the previous one,
