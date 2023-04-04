@@ -40,6 +40,7 @@ class BST(BinaryTree):
             return value
         else:
             raise StopIteration()
+
     def __eq__(self, t2):
         '''
         This method checks to see if the contents of self and t2 are equal.
