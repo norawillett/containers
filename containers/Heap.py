@@ -141,42 +141,95 @@ class Heap(BinaryTree):
         return self._find_smallest(self.root)
     
     def _find_smallest(self,node):
-        print("node=", node)
-        #print("self.node=", self.node)
         if not node:
             return self.root.value
-        print("node.left=", node.left)
-        print("node.right=", node.right)
         left_value = self._find_smallest(node.left)
-        print("left_value=", left_value)
         right_value = self._find_smallest(node.right)
-        print("right_value=", right_value)
         if node.value < left_value and node.value < right_value:
-            print("node.value=", node.value)
             return node.value
         elif left_value < node.value and left_value < right_value:
-            print("left_value=", left_value)
-            print("right_value=", right_value)
             return left_value
         else:
             return right_value
+    
 
     def remove_min(self):
         '''
-        Removes the minimum value from the Heap.
-        If the heap is empty, it does nothing.
-
-        FIXME:
-        Implement this function.
-
-        HINT:
-        The pseudocode is
-        1. remove the bottom right node from the tree
-        2. replace the root node with what was formerly the bottom right
-        3. "trickle down" the root node: recursively swap it with its largest child until the heap property is satisfied
-
-        HINT:
-        I created two @staticmethod helper functions: _remove_bottom_right and _trickle.
-        It's possible to do it with only a single helper (or no helper at all),
-        but I personally found dividing up the code into two made the most sense.
+        Removes and returns the minimum element from the heap.
         '''
+        binary_str = bin(self.num_nodes)[3:]
+        if self.root is None:
+            return None
+        elif not binary_str:
+            print("we are here")
+            min_value = self.root.value
+            self.root = None
+            self.num_nodes = 0
+            return min_value
+        else: 
+            Heap._remove_bottom_right(self.root, binary_str)
+            print("Heap.replace_value=", Heap.replace_value)
+            self.num_nodes -= 1
+            left_child = self.root.left
+            print("left_child before change=", left_child)
+            left_child = self.root.left
+            print("left_child=", left_child)
+            print()
+            print(str(self))
+            self.root.value = Heap.replace_value
+            print("self.root.value=", self.root.value)
+            print("self.root=", self.root)
+            print() 
+            print() 
+            Heap._trickle_down(self.root)
+            return self.root.value
+
+    @staticmethod
+    def _remove_bottom_right(node, binary_str):
+        if node is None:
+            return node
+        print("binary_str=", binary_str)
+        if binary_str[0] == '0':
+            if len(binary_str) == 1:
+                if node.right:
+                    Heap.replace_value = node.right.value
+                    node.right = None
+                    #return replace_value
+                elif node.left:
+                    Heap.replace_value = node.left.value
+                    node.left = None
+                    #return replace_value
+                else:
+                    return None
+            else:
+                Heap._remove_bottom_right(node.left, binary_str[1:])
+                #if replace_value is not None:
+                    #return replace_value
+        if binary_str[0] == '1':
+            if len(binary_str) == 1:
+                if node.right:
+                    Heap.replace_value = node.right.value
+                    node.right = None
+                    #print("# replace_value=", replace_value)
+                elif node.left:
+                    print("are we here")
+                    Heap.replace_value = node.left.value
+                    node.left = None
+                    #return replace_value
+                else:
+                    return None
+            else:
+                print("we are at the very end")
+                Heap._remove_bottom_right(node.right, binary_str[1:])
+        
+    def _trickle_down(node):
+        while node.left:
+            min_child = node.left
+            if node.right and node.right.value < min_child.value:
+                min_child = node.right
+            if node.value > min_child.value:
+                node.value, min_child.value = min_child.value, node.value
+                node = min_child
+            else:
+                break
+
