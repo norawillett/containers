@@ -309,11 +309,6 @@ def test__BST_iterable_1():
 
 
 @given(xs=ints)
-def test__BST_eq(xs):
-    '''
-    This test is essentially the same as the previous one,
-    but tests the == operator specifically.
-    '''
 def test__BST_iterable_2(xs):
     xs = list(set(xs))
 
