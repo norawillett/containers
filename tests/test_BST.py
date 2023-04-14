@@ -309,6 +309,34 @@ def test__BST_iterable_1():
 
 
 @given(xs=ints)
+<<<<<<< HEAD
+def test__BST_eq(xs):
+    '''
+    This test is essentially the same as the previous one,
+    but tests the == operator specifically.
+    '''
+=======
+def test__BST_iterable_2(xs):
+>>>>>>> avltree
+    xs = list(set(xs))
+
+    xs1 = copy.copy(xs)
+    random.shuffle(xs1)
+    bst1 = BST(xs1)
+
+    xs2 = copy.copy(xs)
+    random.shuffle(xs2)
+    bst2 = BST(xs2)
+<<<<<<< HEAD
+    
+    assert list(bst1) == list(bst2)
+
+=======
+
+    assert list(bst1) == list(bst2)
+
+
+@given(xs=ints)
 def test__BST_eq(xs):
     '''
     This test is essentially the same as the previous one,
@@ -324,6 +352,5 @@ def test__BST_eq(xs):
     random.shuffle(xs2)
     bst2 = BST(xs2)
     
-    assert list(bst1) == list(bst2)
-
+>>>>>>> avltree
     assert bst1 == bst2
